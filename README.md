@@ -45,7 +45,7 @@
                     <img src="https://drive.google.com/thumbnail?id=ABC123&sz=w300" alt="Thumbnail">
                     <h3>My First Video</h3>
                 </div>
-                <div class="video-item" data-embed="https://drive.google.com/file/d/DEF456/preview">
+                <div class="video-item" data-embed="https://drive.google.com/file/d/1u2z4uhAbaXyxh8hou_WbNZK6nwc5S2zS/view?usp=sharing">
                     <img src="https://drive.google.com/thumbnail?id=DEF456&sz=w300" alt="Thumbnail">
                     <h3>Adventure Trip</h3>
                 </div>
