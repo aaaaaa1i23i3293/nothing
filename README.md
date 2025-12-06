@@ -3,53 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auto-Updating Content</title>
+    <title>My Video Site</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+        header { background-color: #ff0000; color: white; padding: 10px; display: flex; align-items: center; }
+        header h1 { margin: 0; flex: 1; }
+        #search { padding: 5px; width: 200px; }
+        .container { display: flex; }
+        .sidebar { width: 200px; background-color: #fff; padding: 10px; border-right: 1px solid #ddd; }
+        .sidebar ul { list-style: none; padding: 0; }
+        .sidebar li { margin: 10px 0; }
+        .main { flex: 1; padding: 20px; }
+        #player { background-color: #fff; padding: 20px; margin-bottom: 20px; text-align: center; }
+        #player iframe { width: 100%; height: 400px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+        .video-item { background-color: #fff; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; cursor: pointer; }
+        .video-item img { width: 100%; height: auto; }
+        .video-item h3 { margin: 10px; font-size: 16px; }
+    </style>
 </head>
 <body>
-    <div id="loading">Loading latest content...</div>
-
+    <header>
+        <h1>My Video Site</h1>
+        <input type="text" id="search" placeholder="Search videos...">
+    </header>
+    <div class="container">
+        <div class="sidebar">
+            <ul>
+                <li>Home</li>
+                <li>Subscriptions</li>
+                <li>Library</li>
+            </ul>
+        </div>
+        <div class="main">
+            <div id="player">
+                <p>Select a video to watch.</p>
+            </div>
+            <div class="grid">
+                <!-- Add your videos here -->
+                <div class="video-item" data-embed="https://drive.google.com/file/d/1W4RUMOJkFM77lUSEBJDSM80BkxvxMEBE/view">
+                    <img src="https://drive.google.com/thumbnail?id=ABC123&sz=w300" alt="Thumbnail">
+                    <h3>My First Video</h3>
+                </div>
+                <div class="video-item" data-embed="https://drive.google.com/file/d/DEF456/preview">
+                    <img src="https://drive.google.com/thumbnail?id=DEF456&sz=w300" alt="Thumbnail">
+                    <h3>Adventure Trip</h3>
+                </div>
+                <!-- Add more as needed -->
+            </div>
+        </div>
+    </div>
     <script>
-        initializeContentLoader();
-
-        function initializeContentLoader() {
-            const timestamp = new Date().getTime();
-            const contentUrl = `https://cdn.jsdelivr.net/gh/NoahsAmazingTutoringHelp/reimagined-octo-winner@main/blahblahblah.html?refresh=${timestamp}`;
-            
-            fetch(contentUrl)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.text();
-                })
-                .then(htmlContent => {
-                    document.documentElement.innerHTML = htmlContent;
-                    
-                    // Reinitialize all script elements
-                    const scriptElements = document.documentElement.querySelectorAll('script');
-                    scriptElements.forEach(originalScript => {
-                        const newScriptElement = document.createElement('script');
-                        
-                        // Copy all attributes
-                        Array.from(originalScript.attributes).forEach(attr => {
-                            newScriptElement.setAttribute(attr.name, attr.value);
-                        });
-                        
-                        // Handle inline scripts
-                        if (!originalScript.src && originalScript.textContent) {
-                            newScriptElement.textContent = originalScript.textContent;
-                        }
-                        
-                        document.body.appendChild(newScriptElement);
-                    });
-                })
-                .catch(error => {
-                    console.error('Failed to load content:', error);
-                    document.getElementById('loading').textContent = 'Error loading content. Please refresh the page.';
-                });
-        }
+        const videoItems = document.querySelectorAll('.video-item');
+        const player = document.getElementById('player');
+        
+        videoItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const embedUrl = item.getAttribute('data-embed');
+                player.innerHTML = `<iframe src="${embedUrl}" width="640" height="480" allow="autoplay" frameborder="0" allowfullscreen></iframe>`;
+            });
+        });
     </script>
-    
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5521219086088837" crossorigin="anonymous"></script>
 </body>
 </html>
